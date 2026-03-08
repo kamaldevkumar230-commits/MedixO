@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Admin Dashboard | MedixO</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+
+body{
+background:#f4f7fc;
+font-family:'Segoe UI',sans-serif;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+height:100vh;
+background:linear-gradient(180deg,#212529,#343a40);
+color:white;
+position:fixed;
+width:230px;
+}
+
+.sidebar h4{
+font-weight:600;
+}
+
+.sidebar a{
+color:#cfd4da;
+text-decoration:none;
+display:block;
+padding:14px 18px;
+transition:0.3s;
+font-size:15px;
+}
+
+.sidebar a:hover{
+background:#495057;
+color:white;
+padding-left:25px;
+}
+
+/* MAIN */
+
+.main{
+margin-left:230px;
+padding:25px;
+}
+
+/* NAVBAR */
+
+.topbar{
+background:white;
+padding:14px 20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+/* STAT CARDS */
+
+
+/* Cards */
+
+.card{
+border:none;
+border-radius:12px;
+box-shadow:0 6px 15px rgba(0,0,0,0.06);
+}
+
+
+
+
+
+.dashboard-card{
+background:white;
+border-radius:16px;
+padding:25px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+.dashboard-card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card-icon{
+font-size:35px;
+margin-bottom:10px;
+}
+
+.dashboard-card h6{
+color:#777;
+font-weight:600;
+}
+
+.dashboard-card h2{
+font-weight:700;
+margin:10px 0;
+}
+
+.card-btn{
+display:inline-block;
+margin-top:10px;
+padding:6px 16px;
+border-radius:20px;
+font-size:14px;
+text-decoration:none;
+color:white;
+}
+
+/* Different Colors */
+
+.appointment-card{
+border-left:5px solid #0d6efd;
+}
+
+.appointment-card .card-icon{
+color:#0d6efd;
+}
+
+.appointment-card .card-btn{
+background:#0d6efd;
+}
+
+.doctor-card{
+border-left:5px solid #198754;
+}
+
+.doctor-card .card-icon{
+color:#198754;
+}
+
+.doctor-card .card-btn{
+background:#198754;
+}
+
+.report-card{
+border-left:5px solid #dc3545;
+}
+
+.report-card .card-icon{
+color:#dc3545;
+}
+
+.report-card .card-btn{
+background:#dc3545;
+}
+
+
+
+
+
+/* WELCOME CARD */
+
+.welcome-card{
+border:none;
+border-radius:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h4 class="text-center py-4 border-bottom">
+<i class="fa-solid fa-hospital"></i> MedixO
+</h4>
+
+<a href="/admin-dashboard">
+<i class="fa fa-dashboard"></i> Dashboard
+</a>
+
+<a href="/appointments">
+<i class="fa fa-calendar-check"></i> Appointments
+</a>
+
+<a href="/doctors">
+<i class="fa fa-user-doctor"></i> Doctors
+</a>
+
+<a href="/patients">
+<i class="fa fa-users"></i> Patients
+</a>
+
+<a href="#">
+<i class="fa fa-file-medical"></i> Reports
+</a>
+
+<a href="/logout">
+<i class="fa fa-sign-out-alt"></i> Logout
+</a>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<h4 class="mb-0">Admin Dashboard</h4>
+
+<div>
+
+<button class="btn btn-primary btn-sm">
+<i class="fa fa-user-plus"></i> Add Doctor
+</button>
+
+<button class="btn btn-success btn-sm">
+<i class="fa fa-calendar-plus"></i> New Appointment
+</button>
+
+</div>
+
+</div>
+
+
+<div class="row g-4">
+
+<!-- Appointment Card -->
+
+<div class="col-md-4">
+
+<div class="dashboard-card appointment-card">
+
+<div class="card-icon">
+<i class="fa fa-calendar-check"></i>
+</div>
+
+<h6>My Appointments</h6>
+
+<h2 th:text="${appointmentCount}"></h2>
+
+<a href="/oappointments" class="card-btn">
+View Appointments
+</a>
+
+</div>
+
+</div>
+
+<!-- Doctor Card -->
+
+<div class="col-md-4">
+
+<div class="dashboard-card doctor-card">
+
+<div class="card-icon">
+<i class="fa fa-user-doctor"></i>
+</div>
+
+<h6>Doctors</h6>
+
+<h2 th:text="${doctorCount}"></h2>
+
+<a href="doctors" class="card-btn">
+View Doctors
+</a>
+
+</div>
+
+</div>
+
+<!-- Reports Card -->
+
+<div class="col-md-4">
+
+<div class="dashboard-card report-card">
+
+<div class="card-icon">
+<i class="fa fa-file-medical"></i>
+</div>
+
+<h6>Medical Reports</h6>
+
+<h2 th:text="${reportCount}"></h2>
+
+<a href="/reports" class="card-btn">
+View Reports
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WELCOME CARD -->
+
+<div class="card welcome-card shadow mt-4">
+
+<div class="card-body">
+
+<h4>Welcome Admin 👋</h4>
+
+<p class="text-muted">
+
+This is your hospital management control panel.  
+You can manage doctors, patients, appointments and medical reports from here.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

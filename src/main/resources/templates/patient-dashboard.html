@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Patient Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+<style>
+
+body{
+background:#f4f6f9;
+overflow-x:hidden;
+font-family:Segoe UI;
+}
+
+/* Sidebar */
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:240px;
+height:100vh;
+background:#198754;
+color:white;
+padding-top:20px;
+}
+
+.sidebar h4{
+font-weight:600;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+display:block;
+padding:12px 20px;
+font-size:15px;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+background:#146c43;
+padding-left:28px;
+}
+
+/* Main Content */
+
+.main-content{
+margin-left:240px;
+padding:20px;
+}
+
+/* Navbar */
+
+.top-navbar{
+background:white;
+border-radius:10px;
+padding:10px 20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+margin-bottom:25px;
+}
+
+/* Cards */
+
+.card{
+border:none;
+border-radius:12px;
+box-shadow:0 6px 15px rgba(0,0,0,0.06);
+}
+
+
+
+
+
+.dashboard-card{
+background:white;
+border-radius:16px;
+padding:25px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+.dashboard-card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card-icon{
+font-size:35px;
+margin-bottom:10px;
+}
+
+.dashboard-card h6{
+color:#777;
+font-weight:600;
+}
+
+.dashboard-card h2{
+font-weight:700;
+margin:10px 0;
+}
+
+.card-btn{
+display:inline-block;
+margin-top:10px;
+padding:6px 16px;
+border-radius:20px;
+font-size:14px;
+text-decoration:none;
+color:white;
+}
+
+/* Different Colors */
+
+.appointment-card{
+border-left:5px solid #0d6efd;
+}
+
+.appointment-card .card-icon{
+color:#0d6efd;
+}
+
+.appointment-card .card-btn{
+background:#0d6efd;
+}
+
+.doctor-card{
+border-left:5px solid #198754;
+}
+
+.doctor-card .card-icon{
+color:#198754;
+}
+
+.doctor-card .card-btn{
+background:#198754;
+}
+
+.report-card{
+border-left:5px solid #dc3545;
+}
+
+.report-card .card-icon{
+color:#dc3545;
+}
+
+.report-card .card-btn{
+background:#dc3545;
+}
+
+
+
+
+
+
+/* Doctor Card */
+
+.doctor-card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.4s;
+}
+
+.doctor-card:hover{
+transform:translateY(-8px);
+box-shadow:0 18px 35px rgba(0,0,0,0.15);
+}
+
+/* Image */
+
+.image-wrapper{
+height:250px;
+overflow:hidden;
+}
+
+.image-wrapper img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:0.4s;
+}
+
+.doctor-card:hover img{
+transform:scale(1.1);
+}
+
+/* Content */
+
+.doctor-content{
+padding:18px;
+}
+
+.designation{
+background:#f4e3f1;
+color:#b0006d;
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+display:inline-block;
+margin-bottom:10px;
+}
+
+.doctor-buttons{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+}
+
+.view-btn{
+text-decoration:none;
+font-weight:600;
+color:#b0006d;
+}
+
+.book-btn{
+background:#b0006d;
+color:white;
+padding:6px 14px;
+border-radius:20px;
+font-size:14px;
+text-decoration:none;
+}
+
+.book-btn:hover{
+background:#7a004d;
+}
+
+/* Section */
+
+.section-title{
+font-weight:700;
+margin-bottom:30px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h4 class="text-center mb-4">
+<i class="fa-solid fa-user"></i> Patient
+</h4>
+
+<a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+<a href="/book"><i class="fa fa-calendar-plus"></i> Book Appointment</a>
+
+<a href="/appointments"><i class="fa fa-calendar"></i> My Appointments</a>
+
+<a href="#"><i class="fa fa-user"></i> Profile</a>
+
+<a href="/logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+
+</div>
+
+<!-- Main Content -->
+
+<div class="main-content">
+
+<!-- Navbar -->
+
+<div class="top-navbar d-flex justify-content-between align-items-center">
+
+<h4 class="mb-0">Patient Dashboard</h4>
+
+<div>
+
+<i class="fa fa-bell me-3"></i>
+
+<i class="fa fa-user-circle fa-lg"></i>
+
+</div>
+
+</div>
+
+<!-- Stats -->
+<div class="row g-4">
+
+<!-- Appointment Card -->
+
+<div class="col-md-4">
+
+<div class="dashboard-card appointment-card">
+
+<div class="card-icon">
+<i class="fa fa-calendar-check"></i>
+</div>
+
+<h6>My Appointments</h6>
+
+<h2 th:text="${appointmentCount}"></h2>
+
+<a href="/pappointment-list" class="btn btn-primary">
+My Appointments
+</a>
+
+</div>
+
+</div>
+
+<!-- Doctor Card -->
+
+<div class="col-md-4">
+
+<div class="dashboard-card doctor-card">
+
+<div class="card-icon">
+<i class="fa fa-user-doctor"></i>
+</div>
+
+<h6>Doctors</h6>
+
+<h2 th:text="${doctorCount}"></h2>
+
+<a href="#doctors" class="card-btn">
+View Doctors
+</a>
+
+</div>
+
+</div>
+
+<!-- Reports Card -->
+
+<div class="col-md-4">
+    <div class="dashboard-card report-card">
+
+        <div class="card-icon">
+            <i class="fa fa-file-medical"></i>
+        </div>
+
+        <h6>Medical Reports</h6>
+
+        <h2 th:text="${reportCount}"></h2>
+		<a href="/patient/reports" class="btn btn-dark btn-sm">
+		View Reports
+		</a>
+
+    </div>
+</div>
+</div>
+<!-- Welcome -->
+
+<div class="card mt-4 p-4">
+
+<h4>Welcome Patient 👋</h4>
+
+<p>
+From here you can book appointments, view doctors and manage your medical records.
+</p>
+
+</div>
+
+<!-- Doctors Section -->
+
+<section class="mt-5">
+
+<h3 class="section-title">Our Expert Doctors</h3>
+
+<div class="row g-4">
+
+<div class="col-xl-3 col-lg-4 col-md-6"
+     th:each="doc : ${doctors}">
+
+<div class="doctor-card">
+
+<div class="image-wrapper">
+
+<img th:src="@{${doc.image}}" alt="Doctor">
+
+</div>
+
+<div class="doctor-content text-center">
+
+<span class="designation"
+      th:text="${doc.specialization}">
+</span>
+
+<h5 th:text="${doc.firstName + ' ' + doc.lastName}"></h5>
+
+<p class="text-muted"
+   th:text="${'Consultation Fee ₹' + doc.consultationFee}">
+</p>
+
+<div class="doctor-buttons">
+
+	<a th:href="@{/doctor/view/{id}(id=${doc.id})}" class="view-btn">
+	View →
+	</a>
+
+<a th:href="@{/book}" class="book-btn">
+📞 Book Now
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</body>
+</html>
