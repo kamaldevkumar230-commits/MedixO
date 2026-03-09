@@ -1,5 +1,7 @@
 package com.medixo.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.medixo.entity.Doctor;
 import com.medixo.service.DoctorService;
 
@@ -8,11 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 @Controller
 public class DoctorController {
@@ -36,36 +43,30 @@ public class DoctorController {
         return "redirect:/doctors";
     }
     */
-    
+    @Autowired
+    private Cloudinary cloudinary;
+
     @PostMapping("/doctors/save")
     public String saveDoctor(@ModelAttribute Doctor doctor,
                              @RequestParam("imageFile") MultipartFile file)
             throws IOException {
 
-        if(!file.isEmpty()){
+        if (!file.isEmpty()) {
 
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Map uploadResult = cloudinary.uploader()
+                    .upload(file.getBytes(), ObjectUtils.emptyMap());
 
-            String uploadDir = System.getProperty("user.dir")
-                    + "/target/classes/static/images/";
+            // 👇 yaha change karna hai
+            String imageUrl = uploadResult.get("secure_url").toString();
 
-            Path uploadPath = Paths.get(uploadDir);
-
-            if(!Files.exists(uploadPath)){
-                Files.createDirectories(uploadPath);
-            }
-
-            Files.copy(file.getInputStream(),
-                    uploadPath.resolve(fileName),
-                    StandardCopyOption.REPLACE_EXISTING);
-
-            doctor.setImage("/images/" + fileName);
+            doctor.setImage(imageUrl);
         }
 
         doctorService.saveDoctor(doctor);
 
         return "redirect:/doctors";
     }
+    
     @GetMapping("/doctors/delete/{id}")
     public String deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctor(id);
