@@ -71,6 +71,14 @@ public class UserController {
 
         if("PATIENT".equals(user.getRole())){
         	
+        	
+        	 session.setAttribute("loggedUser", user);
+
+        	    session.setAttribute("patientName", user.getName());
+
+        	    session.setAttribute("patientId", user.getId());
+        	
+        	
         
             return "redirect:/patient-dashboard";
         }

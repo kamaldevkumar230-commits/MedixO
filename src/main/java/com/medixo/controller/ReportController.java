@@ -78,9 +78,9 @@ public class ReportController {
     @GetMapping("/patient/reports")
     public String patientReports(Model model, HttpSession session){
 
-        Long patientId = (Long) session.getAttribute("patientId");
+    	 String patientName = (String) session.getAttribute("patientName");
 
-        List<Report> reports = reportRepository.findByPatientId(patientId);
+        List<Report> reports = reportRepository.findByPatientName(patientName);
 
         model.addAttribute("reports", reports);
 

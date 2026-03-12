@@ -8,7 +8,7 @@ import com.medixo.entity.Report;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
-	 List<Report> findByPatientId(Long patientId);
+	List<Report> findByPatientName(String patientName);
 
 	    List<Report> findByDoctorId(Long doctorId);
 

@@ -22,8 +22,8 @@ public class ReportService {
         return repo.findAll();
     }
 
-    public List<Report> getPatientReports(Long patientId){
-        return repo.findByPatientId(patientId);
+    public List<Report> getPatientReports(String patientName){
+        return repo.findByPatientName(patientName);
     }
 
     public List<Report> getDoctorReports(Long doctorId){

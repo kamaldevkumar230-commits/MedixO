@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medixo.entity.OAppointment;
+import com.medixo.repository.AppointmentRepository;
 import com.medixo.repository.OAppointmentRepository;
 
 @Service
@@ -44,5 +45,9 @@ public class OAppointmentService {
 
         return repo.findByPatientName(patientName);
 
+    }
+    
+    public long countAppointmentsByPatientName(String patientName){
+        return repo.countByPatientName(patientName);
     }
 }

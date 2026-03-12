@@ -42,15 +42,20 @@ public class PatientController {
     public String patientDashboard(Model model, HttpSession session) {
 
         Long patientId = (Long) session.getAttribute("patientId");
+    
 
         model.addAttribute("doctors", doctorService.getAllDoctors());
 
         model.addAttribute("doctorCount", doctorService.getAllDoctors().size());
 
-        model.addAttribute("appointmentCount", appointmentService.countAppointments());
+        String patientName = (String) session.getAttribute("patientName");
 
+        model.addAttribute("appointmentCount",
+                appointmentService.countAppointmentsByPatientName(patientName));
         // Only this patient's reports
-        List<Report> reports = reportRepository.findByPatientId(patientId);
+       
+
+        List<Report> reports = reportRepository.findByPatientName(patientName);
 
         model.addAttribute("reportCount", reports.size());
 
