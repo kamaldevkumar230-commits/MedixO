@@ -39,3 +39,24 @@ async function createOffer() {
         }
     }, 2000);
 }
+
+
+// 🔴 END CALL FUNCTION
+function endCall() {
+
+    // 1. Camera band karo
+    if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+    }
+
+    // 2. Peer connection close karo
+    if (peerConnection) {
+        peerConnection.close();
+    }
+
+    // 3. Video screen clear karo
+    document.getElementById("localVideo").srcObject = null;
+    document.getElementById("remoteVideo").srcObject = null;
+
+    alert("Call Ended ❌");
+}

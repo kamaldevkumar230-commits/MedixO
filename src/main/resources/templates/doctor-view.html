@@ -113,6 +113,11 @@ th:text="${doctor.firstName + ' ' + doctor.lastName}">
 🚑 Emergency Video Call
 </button>
 
+<!-- NEW BUTTON -->
+<button class="btn btn-secondary mt-3 ms-2" onclick="endCall()">
+❌ End Call
+</button>
+
 </div>
 
 </div>
@@ -142,53 +147,6 @@ th:text="${doctor.firstName + ' ' + doctor.lastName}">
 </div>
 
 </div>
-
-<script>
-let localStream;
-let peerConnection = new RTCPeerConnection();
-
-async function startCall(){
-
-    // 1. Camera ON
-    localStream = await navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:true
-    });
-
-    document.getElementById("localVideo").srcObject = localStream;
-
-    // 2. Track add karo
-    localStream.getTracks().forEach(track=>{
-        peerConnection.addTrack(track, localStream);
-    });
-
-    // 3. Remote video handle
-    peerConnection.ontrack = event=>{
-        document.getElementById("remoteVideo").srcObject = event.streams[0];
-    };
-
-    // 4. Offer create karo (PATIENT call start karega)
-    let offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-
-    // 5. Backend pe bhejo
-    await fetch("/video/send-offer",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify(offer)
-    });
-
-    // 6. Answer wait karo (Doctor se)
-    setInterval(async ()=>{
-        let res = await fetch("/video/get-answer");
-        let answer = await res.json();
-
-        if(answer && !peerConnection.currentRemoteDescription){
-            await peerConnection.setRemoteDescription(answer);
-        }
-    },2000);
-}
-</script>
-
+<script src="/JS/patient_video_call.js"></script>
 </body>
 </html>
