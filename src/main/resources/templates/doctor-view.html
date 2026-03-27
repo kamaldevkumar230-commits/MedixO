@@ -144,28 +144,50 @@ th:text="${doctor.firstName + ' ' + doctor.lastName}">
 </div>
 
 <script>
+let localStream;
+let peerConnection = new RTCPeerConnection();
 
-function startCall(){
+async function startCall(){
 
-navigator.mediaDevices.getUserMedia({
-video:true,
-audio:true
-})
+    // 1. Camera ON
+    localStream = await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+    });
 
-.then(stream => {
+    document.getElementById("localVideo").srcObject = localStream;
 
-document.getElementById("localVideo").srcObject = stream;
+    // 2. Track add karo
+    localStream.getTracks().forEach(track=>{
+        peerConnection.addTrack(track, localStream);
+    });
 
-})
+    // 3. Remote video handle
+    peerConnection.ontrack = event=>{
+        document.getElementById("remoteVideo").srcObject = event.streams[0];
+    };
 
-.catch(err => {
+    // 4. Offer create karo (PATIENT call start karega)
+    let offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
 
-alert("Camera access denied");
+    // 5. Backend pe bhejo
+    await fetch("/video/send-offer",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(offer)
+    });
 
-});
+    // 6. Answer wait karo (Doctor se)
+    setInterval(async ()=>{
+        let res = await fetch("/video/get-answer");
+        let answer = await res.json();
 
+        if(answer && !peerConnection.currentRemoteDescription){
+            await peerConnection.setRemoteDescription(answer);
+        }
+    },2000);
 }
-
 </script>
 
 </body>

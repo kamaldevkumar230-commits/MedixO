@@ -20,7 +20,7 @@ public class EmailService {
         try {
             String subject = "Verify Your MedixO Account";
 
-            String baseUrl = "http://localhost:8080";
+            String baseUrl = "http://medixo-0k21.onrender.com";
             String link = baseUrl + "/verify?token=" + token;
 
             String content = "<html>"
