@@ -125,84 +125,58 @@ placeholder="Search Appointment...">
 
 <div class="card-body">
 
-<table class="table table-hover align-middle">
+	<table class="table table-hover align-middle">
 
-<thead>
+	<thead>
+	<tr>
+	<th>ID</th>
+	<th>Patient</th>
+	<th>Doctor</th>
+	<th>Date</th>
+	<th>Time</th>
+	<th>Problem</th>
+	<th>Status</th>
+	</tr>
+	</thead>
 
-<tr>
+	<tbody>
 
-<th>ID</th>
-<th>Patient</th>
-<th>Doctor</th>
-<th>Date</th>
-<th>Time</th>
-<th>Problem</th>
-<th>Status</th>
+	<tr th:each="a : ${list}">
 
+	<td th:text="${a.id}"></td>
 
-</tr>
+	<!-- ✅ FIX -->
+	<td th:text="${a.patient != null ? a.patient.name : 'N/A'}"></td>
+	<td th:text="${a.doctor != null ? a.doctor.name : 'N/A'}"></td>
 
-</thead>
+	<td th:text="${a.date}"></td>
+	<td th:text="${a.time}"></td>
+	<td th:text="${a.problem}"></td>
 
-<tbody>
+	<!-- STATUS -->
+	<td>
 
-<tr th:each="a : ${list}">
+	<span class="badge bg-warning"
+	      th:if="${a.status=='PENDING'}">
+	    Pending
+	</span>
 
-<td th:text="${a.id}"></td>
+	<span class="badge bg-success"
+	      th:if="${a.status=='APPROVED'}">
+	    Approved
+	</span>
 
-<td th:text="${a.patientName}"></td>
+	<span class="badge bg-danger"
+	      th:if="${a.status=='CANCELLED'}">
+	    Cancelled
+	</span>
 
-<td th:text="${a.doctorName}"></td>
+	</td>
 
-<td th:text="${a.date}"></td>
+	</tr>
 
-<td th:text="${a.time}"></td>
-
-<td th:text="${a.problem}"></td>
-
-
-<!-- STATUS -->
-
-<td>
-
-<span class="badge bg-warning"
-th:if="${a.status=='PENDING'}">
-
-Pending
-
-</span>
-
-<span class="badge bg-success"
-th:if="${a.status=='APPROVED'}">
-
-Approved
-
-</span>
-
-<span class="badge bg-danger"
-th:if="${a.status=='CANCELLED'}">
-
-Cancelled
-
-</span>
-
-</td>
-
-
-<!-- ACTION -->
-
-
-
-<!-- CREATE REPORT -->
-
-
-
-</tr>
-
-</tbody>
-
-</table>
-
+	</tbody>
+	</table>
 </div>
 
 </div>

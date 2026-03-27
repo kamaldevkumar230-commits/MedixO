@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Verify Email</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .email {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .icon {
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="icon">📧</div>
+
+    <h2>Check Your Email</h2>
+
+    <p>
+        We have sent a verification link to:
+    </p>
+
+    <p class="email" th:text="${email}"></p>
+
+    <p>
+        Please open your Gmail and click on the verification link to activate your account.
+    </p>
+
+    <p style="color:red;">
+        (If you don’t see the email, check your Spam folder)
+    </p>
+
+    <a href="/login">
+        <button class="btn">Go to Login</button>
+    </a>
+
+</div>
+
+</body>
+</html>

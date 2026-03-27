@@ -1,0 +1,166 @@
+/* GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body{
+    background:#eef2f7;
+    font-family:'Poppins', sans-serif;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    height:100vh;
+    background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    position:fixed;
+    width:240px;
+    transition:0.3s;
+}
+
+.sidebar h4{
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.sidebar a{
+    color:#cfd8dc;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 20px;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,0.1);
+    color:white;
+    padding-left:28px;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:240px;
+    padding:25px;
+}
+
+/* TOPBAR */
+
+.topbar{
+    background:white;
+    padding:15px 20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* DASHBOARD CARDS */
+
+.dashboard-card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transition:0.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+}
+
+/* ICON */
+
+.card-icon{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+/* TEXT */
+
+.dashboard-card h6{
+    color:#888;
+    font-weight:500;
+}
+
+.dashboard-card h2{
+    font-weight:700;
+}
+
+/* BUTTON */
+
+.card-btn{
+    display:inline-block;
+    margin-top:12px;
+    padding:7px 18px;
+    border-radius:30px;
+    font-size:14px;
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+.card-btn:hover{
+    opacity:0.85;
+}
+
+/* COLORS */
+
+.appointment-card{
+    border-top:5px solid #4facfe;
+}
+.appointment-card .card-icon{
+    color:#4facfe;
+}
+.appointment-card .card-btn{
+    background:#4facfe;
+}
+
+.doctor-card{
+    border-top:5px solid #43e97b;
+}
+.doctor-card .card-icon{
+    color:#43e97b;
+}
+.doctor-card .card-btn{
+    background:#43e97b;
+}
+
+.report-card{
+    border-top:5px solid #fa709a;
+}
+.report-card .card-icon{
+    color:#fa709a;
+}
+.report-card .card-btn{
+    background:#fa709a;
+}
+
+/* WELCOME */
+
+.welcome-card{
+    border-radius:18px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main{
+        margin-left:0;
+    }
+}

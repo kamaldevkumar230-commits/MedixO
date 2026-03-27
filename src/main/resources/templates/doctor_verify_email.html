@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Verification</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+
+        .success {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .info {
+            color: #555;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .pending {
+            color: #ff9800;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2 class="success">✅ Email Verified Successfully!</h2>
+
+    <p class="info">
+        Your doctor account has been successfully verified.
+    </p>
+
+    <p class="pending">
+        ⏳ Your account is under review by Admin.
+    </p>
+
+    <p class="info">
+        You will be able to login after approval.<br>
+        This process may take up to <b>24 hours</b>.
+    </p>
+
+    <a href="/">OK</a>
+
+</div>
+
+</body>
+</html>

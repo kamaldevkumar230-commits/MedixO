@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.medixo.entity.OAppointment;
+import com.medixo.entity.User;
 import com.medixo.service.OAppointmentService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class OAppointmentController {
@@ -19,6 +22,8 @@ public class OAppointmentController {
     public String showForm(Model model) {
 
         model.addAttribute("appointment", new OAppointment());
+        model.addAttribute("doctors", service.getAllDoctors()); // ✅ MOST IMPORTANT
+
 
         return "book-appointment";
     }
@@ -26,13 +31,21 @@ public class OAppointmentController {
 
     // Save Appointment
     @PostMapping("/saveAppointment")
-    public String saveAppointment(@ModelAttribute OAppointment appointment) {
+    public String saveAppointment(@RequestParam Long doctorId,
+                                 @RequestParam String date,
+                                 @RequestParam String time,
+                                 @RequestParam String problem,
+                                 HttpSession session) {
 
-        appointment.setStatus("PENDING");
+        User patient = (User) session.getAttribute("loggedUser");
 
-        service.saveAppointment(appointment);
+        if(patient == null){
+            return "redirect:/login"; // ✅ safety
+        }
 
-        return "redirect:/oappointments";
+        service.saveAppointment(patient.getId(), doctorId, date, time, problem);
+
+        return "appointment-successfull";
     }
 
 
@@ -56,7 +69,7 @@ public class OAppointmentController {
 
         service.saveAppointment(a);
 
-        return "redirect:/oappointments";
+        return "redirect:/appointment-list";
     }
 
 
@@ -70,7 +83,7 @@ public class OAppointmentController {
 
         service.saveAppointment(a);
 
-        return "redirect:/oappointments";
+        return "redirect:/appointment-list";
     }
 
 }

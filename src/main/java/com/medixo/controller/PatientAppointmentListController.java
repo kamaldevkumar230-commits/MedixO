@@ -1,5 +1,6 @@
 package com.medixo.controller;
 
+import com.medixo.entity.OAppointment;
 import com.medixo.entity.Report;
 import com.medixo.entity.User;
 import com.medixo.repository.ReportRepository;
@@ -34,10 +35,12 @@ public class PatientAppointmentListController {
 
         User patient = (User) session.getAttribute("loggedUser");
 
-        String patientName = patient.getName();
+        Long patientId = patient.getId();
 
-        model.addAttribute("list",
-                appointmentService.getPatientAppointments(patientName));
+        List<OAppointment> list = appointmentService.getPatientAppointments(patientId);
+
+        model.addAttribute("list", list);
+        model.addAttribute("appointmentCount", list.size());
 
         return "patient-appointment-list";
     }

@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -180,14 +181,14 @@ border-radius:15px;
 <body>
 
 <!-- SIDEBAR -->
-
+<!----
 <div class="sidebar">
 
 <h4 class="text-center py-4 border-bottom">
 <i class="fa-solid fa-hospital"></i> MedixO
 </h4>
 
-<a href="/admin-dashboard">
+<a href="/admin/pending_doctors">
 <i class="fa fa-dashboard"></i> Dashboard
 </a>
 
@@ -216,9 +217,13 @@ border-radius:15px;
 
 <!-- MAIN CONTENT -->
 
+<!--
+
 <div class="main">
 
 <!-- TOPBAR -->
+
+<!--
 
 <div class="topbar">
 
@@ -243,6 +248,8 @@ border-radius:15px;
 
 <!-- Appointment Card -->
 
+<!--
+
 <div class="col-md-4">
 
 <div class="dashboard-card appointment-card">
@@ -264,6 +271,7 @@ View Appointments
 </div>
 
 <!-- Doctor Card -->
+<!---
 
 <div class="col-md-4">
 
@@ -285,7 +293,8 @@ View Doctors
 
 </div>
 
-<!-- Reports Card -->
+<!-- Reports Card 
+
 
 <div class="col-md-4">
 
@@ -310,7 +319,7 @@ View Reports
 </div>
 
 
-<!-- WELCOME CARD -->
+<!-- WELCOME CARD 
 
 <div class="card welcome-card shadow mt-4">
 
@@ -334,3 +343,168 @@ You can manage doctors, patients, appointments and medical reports from here.
 </body>
 
 </html>
+-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<title>Admin Dashboard | MedixO</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" th:href="@{/CSS/admin_dashboard.css}">
+
+</head>
+
+<body>
+
+<!-- 🔷 SIDEBAR -->
+<div class="sidebar">
+
+    <h4 class="text-center py-4 border-bottom">
+        <i class="fa-solid fa-hospital"></i> MedixO
+    </h4>
+
+    <a href="/admin/pending_doctors">
+        <i class="fa fa-chart-line"></i> Dashboard
+    </a>
+
+    <a href="/appointments">
+        <i class="fa fa-calendar-check"></i> Appointments
+    </a>
+
+    <a href="/doctors">
+        <i class="fa fa-user-doctor"></i> Doctors
+    </a>
+
+    <a href="/patients">
+        <i class="fa fa-users"></i> Patients
+    </a>
+
+    <a href="/reports">
+        <i class="fa fa-file-medical"></i> Reports
+    </a>
+
+    <a href="/logout">
+        <i class="fa fa-sign-out-alt"></i> Logout
+    </a>
+
+</div>
+
+<!-- 🔷 MAIN -->
+<div class="main">
+
+    <!-- 🔷 TOPBAR -->
+    <div class="topbar mb-4">
+
+        <h4 class="mb-0">Admin Dashboard</h4>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <button class="btn btn-gradient btn-sm">
+                <i class="fa fa-user-plus"></i> Add Doctor
+            </button>
+
+            <button class="btn btn-success btn-sm">
+                <i class="fa fa-calendar-plus"></i> New Appointment
+            </button>
+
+            <i class="fa fa-bell"></i>
+            <i class="fa fa-user-circle fa-2x"></i>
+
+        </div>
+
+    </div>
+
+    <!-- 🔷 CARDS -->
+    <div class="row g-4">
+
+        <!-- Appointment -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-card appointment-card">
+
+                <div class="card-icon">
+                    <i class="fa fa-calendar-check"></i>
+                </div>
+
+                <h6>Appointments</h6>
+                <h2 th:text="${appointmentCount}">120</h2>
+
+                <a href="/appointments" class="card-btn">
+                    View Appointments
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Doctors -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-card doctor-card">
+
+                <div class="card-icon">
+                    <i class="fa fa-user-doctor"></i>
+                </div>
+
+                <h6>Doctors</h6>
+                <h2 th:text="${doctorCount}">45</h2>
+
+                <a href="/doctors" class="card-btn">
+                    View Doctors
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Reports -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-card report-card">
+
+                <div class="card-icon">
+                    <i class="fa fa-file-medical"></i>
+                </div>
+
+                <h6>Reports</h6>
+                <h2 th:text="${reportCount}">78</h2>
+
+                <a href="/reports" class="card-btn">
+                    View Reports
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🔷 WELCOME SECTION -->
+    <div class="card welcome-card shadow mt-4">
+
+        <div class="card-body">
+
+            <h4>Welcome Admin 👋</h4>
+
+            <p>
+                This is your hospital management dashboard.  
+                Manage doctors, patients, appointments and reports easily.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+

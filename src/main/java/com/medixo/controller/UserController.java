@@ -77,6 +77,8 @@ public class UserController {
         	    session.setAttribute("patientName", user.getName());
 
         	    session.setAttribute("patientId", user.getId());
+        	    
+
         	
         	
         

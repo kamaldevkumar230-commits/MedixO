@@ -50,9 +50,14 @@ public class PatientController {
 
         String patientName = (String) session.getAttribute("patientName");
 
-        model.addAttribute("appointmentCount",
-                appointmentService.countAppointmentsByPatientName(patientName));
+       model.addAttribute("appointmentCount",
+               appointmentService.countByPatientId(patientId));
         // Only this patient's reports
+        
+        
+       // model.addAttribute("appointmentCount",
+               // appointmentService.countByPatientId(patientId));
+        
        
 
         List<Report> reports = reportRepository.findByPatientName(patientName);

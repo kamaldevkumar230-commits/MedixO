@@ -23,16 +23,15 @@ public class DoctorAppointmentListController {
 
         User doctor = (User) session.getAttribute("loggedUser");
 
-        String doctorName = doctor.getName();
+        Long doctorId = doctor.getId();
 
         model.addAttribute("list",
-                appointmentService.getDoctorAppointments(doctorName));
-
+                appointmentService.getDoctorAppointments(doctorId));
         return "appointment-list";
     }
     
     
-    @GetMapping("/doctor/create-report/{appointmentId}")
+  /*  @GetMapping("/doctor/create-report/{appointmentId}")
     public String createReportForm(@PathVariable Long appointmentId, Model model) {
 
         OAppointment appointment = appointmentService.getAppointmentById(appointmentId);
@@ -51,6 +50,24 @@ public class DoctorAppointmentListController {
         return "create-report";
     }
     
+    */
+    @GetMapping("/doctor/create-report/{appointmentId}")
+    public String createReportForm(@PathVariable Long appointmentId, Model model) {
+
+        OAppointment appointment = appointmentService.getAppointmentById(appointmentId);
+
+        Report report = new Report();
+
+        // ✅ MOST IMPORTANT FIX
+        report.setPatientName(appointment.getPatient().getName());
+        report.setDoctorName(appointment.getDoctor().getName());
+
+        report.setAppointmentId(appointment.getId());
+
+        model.addAttribute("report", report);
+
+        return "create-report";
+    }
     
 
 }

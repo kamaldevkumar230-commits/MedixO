@@ -9,13 +9,23 @@ public class OAppointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String patientName;
-    private String doctorName;
+   
     private String date;
     private String time;
     private String problem;
     
     private String status = "PENDING";
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private User patient;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private User doctor;
+    
+    
 
     public OAppointment() {
     }
@@ -24,9 +34,7 @@ public class OAppointment {
         return id;
     }
 
-    public String getPatientName() {
-        return patientName;
-    }
+   
 
     public String getStatus() {
 		return status;
@@ -36,17 +44,7 @@ public class OAppointment {
 		this.status = status;
 	}
 
-	public void setPatientName(String patientName) {
-        this.patientName = patientName;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
+	
 
     public String getDate() {
         return date;
@@ -71,4 +69,22 @@ public class OAppointment {
     public void setProblem(String problem) {
         this.problem = problem;
     }
+    
+    public User getPatient() {
+        return patient;
+    }
+
+    public void setPatient(User patient) {
+        this.patient = patient;
+    }
+
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
+    }
+    
+    
 }

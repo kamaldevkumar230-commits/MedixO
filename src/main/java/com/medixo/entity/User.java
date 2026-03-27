@@ -14,10 +14,39 @@ public class User {
     private String email;
     private String password;
     private String role;   // ADMIN / DOCTOR / PATIENT
+    
+    
+    private boolean isVerified;
+    private boolean isApproved;
+    private String verificationToken;
 
     // Getters & Setters
 
-    public String getRole() {
+    public boolean isVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
+	}
+
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+	public void setApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
+
+	public String getVerificationToken() {
+		return verificationToken;
+	}
+
+	public void setVerificationToken(String verificationToken) {
+		this.verificationToken = verificationToken;
+	}
+
+	public String getRole() {
 		return role;
 	}
 
