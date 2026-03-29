@@ -15,26 +15,17 @@ public class EmailService {
     private JavaMailSender mailSender;
 
    
-    public void sendVerificationEmail(String toEmail, String token) {
+    public void sendVerificationCode(String toEmail, String code) {
 
         try {
-            String subject = "Verify Your MedixO Account";
-
-            String baseUrl = "http://medixo-0k21.onrender.com";
-            String link = baseUrl + "/verify?token=" + token;
+            String subject = "MedixO Email Verification Code";
 
             String content = "<html>"
                     + "<body style='font-family:Arial;'>"
-                    + "<h2>Welcome to MedixO 👨‍⚕️</h2>"
-                    + "<p>Please click the link below to verify your email:</p>"
-
-                    // 🔥 IMPORTANT (direct link text)
-                    + "<p><a href=\"" + link + "\">Click here to verify</a></p>"
-
-                    + "<br>"
-                    + "<p>If not working, copy this link:</p>"
-                    + "<p>" + link + "</p>"
-
+                    + "<h2>MedixO Verification 🔐</h2>"
+                    + "<p>Your verification code is:</p>"
+                    + "<h1 style='color:blue;'>" + code + "</h1>"
+                    + "<p>This code will expire in 5 minutes.</p>"
                     + "</body>"
                     + "</html>";
 
@@ -43,11 +34,11 @@ public class EmailService {
 
             helper.setTo(toEmail);
             helper.setSubject(subject);
-            helper.setText(content, true); // HTML enable
+            helper.setText(content, true);
 
             mailSender.send(message);
 
-            System.out.println("EMAIL SENT SUCCESSFULLY ✅");
+            System.out.println("OTP SENT ✅");
 
         } catch (Exception e) {
             e.printStackTrace();

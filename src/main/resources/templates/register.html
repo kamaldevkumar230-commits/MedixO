@@ -144,6 +144,8 @@ User Registration
 </h3>
 
 <form th:action="@{/saveUser}" th:object="${user}" method="post">
+	
+	<p style="color:red;" th:if="${error}" th:text="${error}"></p>
 
 <!-- Name -->
 

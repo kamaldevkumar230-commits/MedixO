@@ -1,7 +1,11 @@
 package com.medixo.controller;
 
 import com.medixo.entity.User;
+import com.medixo.service.EmailService;
 import com.medixo.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+
 import com.medixo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,9 @@ public class RegisterController {
 
     @Autowired
     private UserService service;
+    
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private UserRepository repo; // 🔥 ADD THIS
@@ -37,19 +44,49 @@ public class RegisterController {
     
     
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute User user, Model model) {
+    public String saveUser(@ModelAttribute User user,
+                           HttpSession session,
+                           Model model) {
 
-        service.saveUser(user);
+        try {
+        	
+        	
+        	  // 🔥 STEP 0: DUPLICATE CHECK (VERY IMPORTANT)
+            if (repo.existsByEmail(user.getEmail())) {
+                model.addAttribute("error", "Email already registered ❌");
+                return "register";
+            }
+        	
 
-        model.addAttribute("email", user.getEmail());
+            // 🔥 STEP 1: OTP generate
+            String code = String.valueOf((int)(Math.random() * 900000) + 100000);
 
-        return "check_email"; // 👈 new page
+            // 🔥 STEP 2: session me store
+            session.setAttribute("otp", code);
+            session.setAttribute("tempUser", user); // 🔥 IMPORTANT (user ko temporarily store)
+
+            // 🔥 STEP 3: email send
+            emailService.sendVerificationCode(user.getEmail(), code);
+
+            // 🔥 STEP 4: email show page
+            model.addAttribute("email", user.getEmail());
+
+            return "fill_email_code";
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            model.addAttribute("error", "Something went wrong!");
+
+            return "register";
+        }
+    
     }
     
     
     
     
-    
+   /* 
 
     // 🔥 EMAIL VERIFICATION (NEW ADD)
     @GetMapping("/verify")
@@ -72,5 +109,74 @@ public class RegisterController {
         }
 
         return "error";
+    }
+}
+
+*/
+    
+    @GetMapping("/verify_success")
+    public String patientSuccess() {
+        return "verify_success";
+    }
+
+    @GetMapping("/doctor_verify_email")
+    public String doctorSuccess() {
+        return "doctor_verify_email";
+    }
+
+
+    @PostMapping("/verify-code")
+    public String verifyCode(@RequestParam String code,
+                             HttpSession session,
+                             Model model) {
+
+        String sessionCode = (String) session.getAttribute("otp");
+        User user = (User) session.getAttribute("tempUser");
+
+        if (sessionCode != null && sessionCode.equals(code)) {
+
+            // 🔥 FINAL SAVE
+            service.saveUser(user);
+
+            // cleanup
+            session.removeAttribute("otp");
+            session.removeAttribute("tempUser");
+
+            // 🔥 ROLE CHECK
+            if ("DOCTOR".equalsIgnoreCase(user.getRole())) {
+                return "redirect:/doctor_verify_email";
+            } else {
+                return "redirect:/verify_success";
+            }
+
+        } else {
+            model.addAttribute("error", "Invalid OTP!");
+            return "fill_email_code";
+        }
+    }
+    
+    
+    
+    
+    @GetMapping("/resend-otp")
+    @ResponseBody
+    public String resendOtp(HttpSession session) {
+
+        User user = (User) session.getAttribute("tempUser");
+
+        if (user == null) {
+            return "Session expired!";
+        }
+
+        // 🔥 New OTP generate
+        String code = String.valueOf((int)(Math.random() * 900000) + 100000);
+
+        // update session
+        session.setAttribute("otp", code);
+
+        // send email
+        emailService.sendVerificationCode(user.getEmail(), code);
+
+        return "OTP Sent";
     }
 }

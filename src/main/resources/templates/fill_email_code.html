@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email Verification - MedixO</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            width: 400px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 18px;
+        }
+		
+		
+		
+
+		.otp-container {
+		    display: flex;
+		    justify-content: center;
+		    gap: 10px;
+		    margin-top: 20px;
+		}
+
+		.otp {
+		    width: 45px;
+		    height: 50px;
+		    font-size: 20px;
+		    text-align: center;
+		    border: 2px solid #ccc;
+		    border-radius: 8px;
+		}
+
+		.otp:focus {
+		    border-color: #007bff;
+		    outline: none;
+		}
+		
+		
+		
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .email {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Verify Your Email</h2>
+
+    <p>We sent a code to:</p>
+    <p class="email" th:text="${email}"></p>
+
+	<form action="/verify-code" method="post" onsubmit="combineOTP()">
+
+	    <div class="otp-container">
+	        <input type="text" maxlength="1" class="otp" required>
+	        <input type="text" maxlength="1" class="otp" required>
+	        <input type="text" maxlength="1" class="otp" required>
+	        <input type="text" maxlength="1" class="otp" required>
+	        <input type="text" maxlength="1" class="otp" required>
+	        <input type="text" maxlength="1" class="otp" required>
+	    </div>
+
+	    <!-- Hidden field (final OTP yahan jayega) -->
+	    <input type="hidden" name="code" id="finalCode">
+
+	    <br>
+	    <button class="btn" type="submit">Verify</button>
+		
+		<div id="timerBox" style="margin-top:15px;">
+		    <span id="timer" style="color:#333;">60</span> seconds remaining
+		</div>
+
+		<button id="resendBtn" class="btn" style="display:none;" onclick="resendOTP()">
+		    Resend OTP
+		</button>
+		
+	</form>
+    <p style="color:red;" th:if="${error}" th:text="${error}"></p>
+
+</div>
+
+
+
+
+
+
+<script>
+
+// Auto move next box
+const inputs = document.querySelectorAll(".otp");
+
+inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+
+    // backspace handling
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && input.value === "" && index > 0) {
+            inputs[index - 1].focus();
+        }
+    });
+});
+
+// Combine OTP before submit
+function combineOTP() {
+    let code = "";
+    inputs.forEach(input => {
+        code += input.value;
+    });
+
+    document.getElementById("finalCode").value = code;
+}
+
+</script>
+
+
+
+<script>
+
+let timeLeft = 60;
+let timerElement = document.getElementById("timer");
+let resendBtn = document.getElementById("resendBtn");
+
+let timer = setInterval(() => {
+
+    timeLeft--;
+    timerElement.innerText = timeLeft;
+
+    if (timeLeft <= 0) {
+        clearInterval(timer);
+        document.getElementById("timerBox").style.display = "none";
+        resendBtn.style.display = "inline-block";
+    }
+
+}, 1000);
+
+// 🔄 Resend OTP function
+function resendOTP() {
+
+    fetch("/resend-otp", {
+        method: "GET"
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert("New OTP sent!");
+
+        // reset timer
+        timeLeft = 60;
+        document.getElementById("timerBox").style.display = "block";
+        resendBtn.style.display = "none";
+
+        timer = setInterval(() => {
+            timeLeft--;
+            timerElement.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.getElementById("timerBox").style.display = "none";
+                resendBtn.style.display = "inline-block";
+            }
+
+        }, 1000);
+    });
+}
+
+</script>
+
+
+
+
+
+
+</body>
+</html>

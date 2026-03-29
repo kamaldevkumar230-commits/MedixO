@@ -54,6 +54,11 @@ public class UserService {
     
 
     public User saveUser(User user) {
+    	
+    	 // 🔴 Duplicate email check
+        if(userRepository.existsByEmail(user.getEmail())){
+            throw new RuntimeException("Email already registered ❌");
+        }
 
         // 🔹 Token generate
         String token = TokenUtil.generateToken();
@@ -76,7 +81,7 @@ public class UserService {
         System.out.println("EMAIL SEND HO RAHA HAI");
 
         // 🔹 Email bhejna (agar service ready hai)
-        emailService.sendVerificationEmail(user.getEmail(), token);
+      //  emailService.sendVerificationEmail(user.getEmail(), token);
 
         return savedUser;
     }
@@ -85,7 +90,6 @@ public class UserService {
         return repo.findByRole("DOCTOR");
     }
   
-
     
     
 }
