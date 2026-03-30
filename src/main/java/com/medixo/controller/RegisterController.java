@@ -136,6 +136,7 @@ public class RegisterController {
         if (sessionCode != null && sessionCode.equals(code)) {
 
             // 🔥 FINAL SAVE
+        	  
             service.saveUser(user);
 
             // cleanup

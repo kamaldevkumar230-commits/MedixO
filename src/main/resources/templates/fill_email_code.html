@@ -73,16 +73,25 @@
             color: #007bff;
             font-weight: bold;
         }
+		
+		.icon{
+			font-size:50px;
+		}
     </style>
 </head>
 
 <body>
 
 <div class="card">
+	
+	<div class="icon">📧</div>
 
     <h2>Verify Your Email</h2>
 
     <p>We sent a code to:</p>
+	<p style="color:magenta;">
+	       (If you don’t see the email, check your Spam folder)
+	   </p>
     <p class="email" th:text="${email}"></p>
 
 	<form action="/verify-code" method="post" onsubmit="combineOTP()">

@@ -16,9 +16,9 @@ public class User {
     private String role;   // ADMIN / DOCTOR / PATIENT
     
     
-    private boolean isVerified;
+    private boolean isVerified=true;
     private boolean isApproved;
-    private String verificationToken;
+    
 
     // Getters & Setters
 
@@ -38,13 +38,7 @@ public class User {
 		this.isApproved = isApproved;
 	}
 
-	public String getVerificationToken() {
-		return verificationToken;
-	}
-
-	public void setVerificationToken(String verificationToken) {
-		this.verificationToken = verificationToken;
-	}
+	
 
 	public String getRole() {
 		return role;

@@ -64,8 +64,8 @@ public class UserService {
         String token = TokenUtil.generateToken();
 
         // 🔹 Default values set
-        user.setVerificationToken(token);
-        user.setVerified(false);
+        
+        user.setVerified(true);
 
         // 🔹 Doctor ke liye approval false
         if("DOCTOR".equalsIgnoreCase(user.getRole())) {

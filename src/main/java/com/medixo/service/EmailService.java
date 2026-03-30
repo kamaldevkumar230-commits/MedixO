@@ -1,44 +1,47 @@
 package com.medixo.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import jakarta.mail.internet.MimeMessage;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    @Value("${brevo.api.key}")
+    private String apiKey;
 
-   
     public void sendVerificationCode(String toEmail, String code) {
 
         try {
-            String subject = "MedixO Email Verification Code";
+            String url = "https://api.brevo.com/v3/smtp/email";
 
-            String content = "<html>"
-                    + "<body style='font-family:Arial;'>"
-                    + "<h2>MedixO Verification 🔐</h2>"
-                    + "<p>Your verification code is:</p>"
-                    + "<h1 style='color:blue;'>" + code + "</h1>"
-                    + "<p>This code will expire in 5 minutes.</p>"
-                    + "</body>"
-                    + "</html>";
+            String json = "{"
+                    + "\"sender\":{\"email\":\"medixoteam@gmail.com\"},"
+                    + "\"to\":[{\"email\":\"" + toEmail + "\"}],"
+                    + "\"subject\":\"MedixO Verification Code\","
+                    + "\"htmlContent\":\"<h2>Your OTP is:</h2><h1>" + code + "</h1>\""
+                    + "}";
 
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            URL obj = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 
-            helper.setTo(toEmail);
-            helper.setSubject(subject);
-            helper.setText(content, true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("api-key", apiKey);
+            conn.setRequestProperty("content-type", "application/json");
+            conn.setDoOutput(true);
 
-            mailSender.send(message);
+            OutputStream os = conn.getOutputStream();
+            os.write(json.getBytes());
+            os.flush();
+            os.close();
 
-            System.out.println("OTP SENT ✅");
+            int responseCode = conn.getResponseCode();
+
+            System.out.println("EMAIL RESPONSE CODE: " + responseCode);
 
         } catch (Exception e) {
             e.printStackTrace();
