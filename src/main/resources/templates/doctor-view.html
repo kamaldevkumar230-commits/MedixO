@@ -109,9 +109,10 @@ th:text="${doctor.firstName + ' ' + doctor.lastName}">
 
 <p><b>Consultation Fee:</b> ₹<span th:text="${doctor.consultationFee}"></span></p>
 
-<button class="btn btn-danger mt-3" onclick="startCall()">
-🚑 Emergency Video Call
-</button>
+<a th:href="@{'/video-call/' + ${doctor.id}}"
+   class="btn btn-danger mt-3">
+   🚑 Start Video Call
+</a>
 
 <!-- NEW BUTTON -->
 <button class="btn btn-secondary mt-3 ms-2" onclick="endCall()">
@@ -147,6 +148,6 @@ th:text="${doctor.firstName + ' ' + doctor.lastName}">
 </div>
 
 </div>
-<script src="/JS/patient_video_call.js"></script>
+<!--<script src="/JS/patient_video_call.js"></script>-->
 </body>
 </html>

@@ -1,12 +1,27 @@
 package com.medixo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnore
 
-    @Id
+	private Doctor doctor;
+
+    public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

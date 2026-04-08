@@ -9,8 +9,27 @@ import java.time.LocalDateTime;
 @Table(name = "doctors")
 
 public class Doctor {
+	
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	
+	
+	
+	private User user;
+	
+	
+	
 
-    @Id
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -60,8 +79,9 @@ public class Doctor {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+		System.out.println(lastName);
+		this.lastName = (lastName != "") ? lastName : "Kumar";
+		}
 
 	public String getSpecialization() {
 		return specialization;

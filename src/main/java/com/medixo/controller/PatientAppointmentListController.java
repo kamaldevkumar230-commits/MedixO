@@ -33,7 +33,11 @@ public class PatientAppointmentListController {
     @GetMapping("/pappointment-list")
     public String patientAppointments(HttpSession session, Model model){
 
-        User patient = (User) session.getAttribute("loggedUser");
+        User patient = (User) session.getAttribute("user");
+
+        if (patient == null) {
+            return "redirect:/login";
+        }
 
         Long patientId = patient.getId();
 

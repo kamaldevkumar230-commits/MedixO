@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.medixo.repository.DoctorRepository;
+import com.medixo.repository.OAppointmentRepository;
 import com.medixo.repository.PatientRepository;
 import com.medixo.repository.UserRepository;
+import com.medixo.entity.OAppointment;
 import com.medixo.entity.User;
 import com.medixo.repository.AppointmentRepository;
 
@@ -16,6 +18,9 @@ public class AdminService {
 
     @Autowired
     private DoctorRepository doctorRepo;
+    
+    @Autowired
+    private OAppointmentRepository opall;
     
     @Autowired
     private UserRepository repo;
@@ -52,5 +57,10 @@ public class AdminService {
         }
     }
     
+
+    // Admin ke liye
+    public List<OAppointment> getAllAppointments() {
+        return opall.findAll();
+    }
     
 }

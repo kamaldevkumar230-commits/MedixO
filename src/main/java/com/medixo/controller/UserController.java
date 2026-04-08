@@ -54,12 +54,11 @@ public class UserController {
         User user = service.login(email, password);
 
         if(user == null){
-
             model.addAttribute("error","Invalid Email or Password");
             return "login";
         }
 
-        session.setAttribute("loggedUser", user);
+        session.setAttribute("user", user); // 🔥 FIX
 
         if("ADMIN".equals(user.getRole())){
             return "admin-dashboard";
@@ -70,18 +69,10 @@ public class UserController {
         }
 
         if("PATIENT".equals(user.getRole())){
-        	
-        	
-        	 session.setAttribute("loggedUser", user);
 
-        	    session.setAttribute("patientName", user.getName());
+            session.setAttribute("patientName", user.getName());
+            session.setAttribute("patientId", user.getId());
 
-        	    session.setAttribute("patientId", user.getId());
-        	    
-
-        	
-        	
-        
             return "redirect:/patient-dashboard";
         }
 

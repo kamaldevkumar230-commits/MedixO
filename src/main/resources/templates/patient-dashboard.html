@@ -396,7 +396,7 @@ From here you can book appointments, view doctors and manage your medical record
       th:text="${doc.specialization}">
 </span>
 
-<h5 th:text="${doc.firstName + ' ' + doc.lastName}"></h5>
+<h5 th:text="${doc.firstName }"></h5>
 
 <p class="text-muted"
    th:text="${'Consultation Fee ₹' + doc.consultationFee}">

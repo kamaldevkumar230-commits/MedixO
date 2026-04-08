@@ -21,7 +21,7 @@ public class DoctorAppointmentListController {
     @GetMapping("/appointment-list")
     public String doctorAppointments(HttpSession session, Model model){
 
-        User doctor = (User) session.getAttribute("loggedUser");
+        User doctor = (User) session.getAttribute("user");
 
         Long doctorId = doctor.getId();
 

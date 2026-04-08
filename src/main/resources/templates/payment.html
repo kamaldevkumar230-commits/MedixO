@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Choose Payment</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+	<!-- ✅ Bootstrap -->
+	   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	   <!-- ✅ Font Awesome -->
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	
+	<style>
+		
+	
+		/* Navbar */
+
+		.navbar{
+		padding:12px 0;
+		}
+
+		</style>
+</head>
+<body>
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+
+<div class="container">
+
+<a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+
+<img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png"
+width="36">
+
+MedixO
+
+</a>
+
+<div class="d-flex gap-3">
+
+	<a href="/" class="btn btn-outline-light btn-sm">
+	<i class="fa fa-home"></i> Home
+	</a>
+
+<button onclick="history.back()" 
+        class="btn btn-outline-light btn-sm">
+        <i class="fa fa-arrow-left"></i> Back
+</button>
+
+
+
+</div>
+
+</div>
+
+</nav>
+
+
+<div class="bg-gray-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded-xl shadow-lg w-96">
+
+    <h2 class="text-2xl font-bold text-center mb-6">Select Payment Method</h2>
+
+    <form th:action="@{/saveAppointment}" method="post">
+
+        <!-- hidden booking data -->
+        <input type="hidden" name="doctorId" th:value="${doctorId}">
+        <input type="hidden" name="date" th:value="${date}">
+        <input type="hidden" name="time" th:value="${time}">
+		<input type="hidden" name="problem" th:value="${problem}">
+
+        <!-- options -->
+        <div class="space-y-4">
+
+            <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
+                <input type="radio" name="paymentMode" value="Cash" required>
+                💵 Cash
+            </label>
+
+            <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
+                <input type="radio" name="paymentMode" value="UPI">
+                📱 UPI
+            </label>
+
+            <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
+                <input type="radio" name="paymentMode" value="Card">
+                💳 Card
+            </label>
+
+        </div>
+
+        <button class="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+            Confirm Booking
+        </button>
+
+    </form>
+
+</div>
+</div>
+
+</body>
+</html>

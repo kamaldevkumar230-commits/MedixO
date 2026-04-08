@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Patients</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        tr:hover {
+            background: #e9f5ff;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .verified {
+            background: green;
+        }
+
+        .not-verified {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>👨‍⚕️ All Patients</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${patients}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.email}"></td>
+			
+
+           
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

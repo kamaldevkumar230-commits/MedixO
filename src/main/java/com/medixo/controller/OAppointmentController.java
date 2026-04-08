@@ -29,6 +29,28 @@ public class OAppointmentController {
     }
 
 
+    @PostMapping("/payment-page")
+    public String paymentPage(
+            @RequestParam Long doctorId,
+            @RequestParam String date,
+            @RequestParam String time,
+            @RequestParam String problem,
+          
+            Model model) {
+
+        model.addAttribute("doctorId", doctorId);
+        model.addAttribute("date", date);
+        model.addAttribute("time", time);
+        model.addAttribute("problem", problem);
+
+       
+
+        return "payment";
+    }
+    
+    
+    
+    
     // Save Appointment
     @PostMapping("/saveAppointment")
     public String saveAppointment(@RequestParam Long doctorId,
@@ -37,7 +59,7 @@ public class OAppointmentController {
                                  @RequestParam String problem,
                                  HttpSession session) {
 
-        User patient = (User) session.getAttribute("loggedUser");
+        User patient = (User) session.getAttribute("user");
 
         if(patient == null){
             return "redirect:/login"; // ✅ safety

@@ -1,11 +1,13 @@
 package com.medixo.controller;
 
+import com.medixo.entity.Doctor;
 import com.medixo.entity.User;
 import com.medixo.service.EmailService;
 import com.medixo.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.medixo.repository.DoctorRepository;
 import com.medixo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +116,11 @@ public class RegisterController {
 
 */
     
+    
+    @Autowired
+    private DoctorRepository doctorRepo;
+    
+    
     @GetMapping("/verify_success")
     public String patientSuccess() {
         return "verify_success";
@@ -123,7 +130,6 @@ public class RegisterController {
     public String doctorSuccess() {
         return "doctor_verify_email";
     }
-
 
     @PostMapping("/verify-code")
     public String verifyCode(@RequestParam String code,
@@ -135,28 +141,37 @@ public class RegisterController {
 
         if (sessionCode != null && sessionCode.equals(code)) {
 
-            // 🔥 FINAL SAVE
-        	  
-            service.saveUser(user);
+            User savedUser = service.saveUser(user);
 
-            // cleanup
-            session.removeAttribute("otp");
-            session.removeAttribute("tempUser");
+            // 🔥 DOCTOR LOGIC
+            if ("DOCTOR".equalsIgnoreCase(savedUser.getRole())) {
 
-            // 🔥 ROLE CHECK
-            if ("DOCTOR".equalsIgnoreCase(user.getRole())) {
-                return "redirect:/doctor_verify_email";
-            } else {
-                return "redirect:/verify_success";
+                Doctor doc = doctorRepo.findByUser(savedUser);
+
+                if (doc == null) {
+                    doc = new Doctor();
+
+                    doc.setUser(savedUser);
+                    doc.setEmail(savedUser.getEmail());
+                    doc.setFirstName(savedUser.getName());
+                    doc.setStatus("PENDING");
+
+                    doctorRepo.save(doc);
+                }
+
+                session.setAttribute("user", savedUser);
+
+                return "redirect:/doctor_verify_email"; // 👈 direct
             }
+
+            // 🔥 PATIENT LOGIC (IMPORTANT)
+            return "redirect:/verify_success";
 
         } else {
             model.addAttribute("error", "Invalid OTP!");
             return "fill_email_code";
         }
     }
-    
-    
     
     
     @GetMapping("/resend-otp")

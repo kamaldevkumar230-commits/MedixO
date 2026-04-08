@@ -22,5 +22,7 @@ public interface OAppointmentRepository extends JpaRepository<OAppointment, Long
     List<OAppointment> findByPatientId(Long patientId);
     
     long countByPatientId(Long patientId);
+    
+    List<OAppointment> findAll();
 
 }

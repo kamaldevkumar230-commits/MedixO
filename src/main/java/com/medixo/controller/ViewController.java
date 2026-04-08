@@ -17,12 +17,11 @@ public class ViewController {
         this.userService = userService;
     }
 
-  /*  @GetMapping("/")
-    public String dashboard(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "index";
+    @GetMapping("/about")
+    public String aboutPage() {
+        return "about"; // 👉 about.html load karega
     }
-    */
+    
     
     @Autowired
     private DoctorService doctorService;

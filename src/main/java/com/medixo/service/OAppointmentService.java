@@ -81,4 +81,7 @@ public class OAppointmentService {
     public long countByPatientId(Long patientId){
         return repo.countByPatientId(patientId);
     }
+    
+    
+   
 }

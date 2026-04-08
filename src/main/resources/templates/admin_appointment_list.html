@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Appointments</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #eef2f3, #dfe9f3);
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .table thead {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f7ff;
+            transition: 0.3s;
+        }
+
+        .header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            max-width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+	<!-- NAVBAR -->
+
+	<!-- NAVBAR -->
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+
+	<div class="container">
+
+	<a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+
+	<img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png"
+	width="36">
+
+	MedixO
+
+	</a>
+
+	<div class="d-flex gap-2">
+
+	<a href="/" class="btn btn-outline-light btn-sm">
+	<i class="fa fa-home"></i> Home
+	</a>
+
+
+	<button onclick="history.back()" class="btn btn-outline-light btn-sm">
+	<i class="fa fa-arrow-left"></i> Back
+	</button>
+
+	</div>
+
+	</div>
+
+	</nav>
+
+
+<!-- 🔷 MAIN CONTAINER -->
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="header-box">
+        <h3>
+            <i class="fa fa-calendar-check text-primary"></i>
+            All Appointments
+        </h3>
+
+        <input type="text" class="form-control search-box" placeholder="Search..." />
+    </div>
+
+    <!-- CARD -->
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle text-center">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Problem</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="a : ${appointments}">
+
+                    <td th:text="${a.id}"></td>
+
+                    <td>
+                        <i class="fa fa-user text-primary"></i>
+                        <span th:text="${a.patient.name}"></span>
+                    </td>
+
+                    <td>
+                        <i class="fa fa-user-doctor text-success"></i>
+                        <span th:text="${a.doctor.name}"></span>
+                    </td>
+
+                    <td th:text="${a.date}"></td>
+                    <td th:text="${a.time}"></td>
+                    <td th:text="${a.problem}"></td>
+
+                    <!-- STATUS BADGE -->
+                    <td>
+                        <span class="badge bg-warning"
+                              th:if="${a.status=='PENDING'}">Pending</span>
+
+                        <span class="badge bg-success"
+                              th:if="${a.status=='APPROVED'}">Approved</span>
+
+                        <span class="badge bg-danger"
+                              th:if="${a.status=='CANCELLED'}">Cancelled</span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

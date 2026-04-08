@@ -90,6 +90,8 @@ public class UserService {
         return repo.findByRole("DOCTOR");
     }
   
-    
+    public List<User> getAllPatients() {
+        return repo.findByRole("PATIENT");
+    }
     
 }
