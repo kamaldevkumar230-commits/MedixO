@@ -1,6 +1,8 @@
 package com.medixo.controller;
 
 import com.medixo.entity.User;
+import com.medixo.repository.DoctorRepository;
+import com.medixo.service.DoctorService;
 import com.medixo.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +38,8 @@ public class UserController {
     
     
     */
+	 @Autowired 
+	    private DoctorService doctorService;
     
     @Autowired
     private UserService service;
@@ -65,6 +69,11 @@ public class UserController {
         }
 
         if("DOCTOR".equals(user.getRole())){
+        	
+        	  session.setAttribute("userEmail", user.getEmail()); 
+        	doctorService.setDoctorOnline(email);
+        	
+        	
             return "redirect:/doctor-dashboard";
         }
 
@@ -75,8 +84,10 @@ public class UserController {
 
             return "redirect:/patient-dashboard";
         }
+        
 
         return "login";
+        
     }
     
     

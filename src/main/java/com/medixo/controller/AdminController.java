@@ -12,6 +12,7 @@ import com.medixo.entity.OAppointment;
 import com.medixo.entity.User;
 import com.medixo.service.AdminService;
 import com.medixo.service.AppointmentService;
+import com.medixo.service.DoctorService;
 import com.medixo.service.OAppointmentService;
 import com.medixo.service.UserService;
 
@@ -41,10 +42,15 @@ public class AdminController {
         return "admin_pending";
     }
 
+    @Autowired
+    private DoctorService doctorService;
     @GetMapping("/admin/approve/{id}")
     public String approveDoctor(@PathVariable Long id) {
+    	
+    	System.out.println("CONTROLLER HIT");
+    	System.out.println(service.getClass().getName());
 
-        service.approveDoctor(id);
+        doctorService.approveDoctor(id);
 
         return "redirect:/admin/pending_doctors";
     }

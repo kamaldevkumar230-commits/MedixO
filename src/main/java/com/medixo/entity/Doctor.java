@@ -34,13 +34,13 @@ public class Doctor {
     private Long id;
 
     private String doctorCode;
-    private String firstName;
-    private String lastName;
+    private String Name;
+    //private String lastName;
     private String specialization;
     private String email;
     private String phone;
-    private Integer experienceYears;
-    private Double consultationFee;
+    private Integer experienceYears = 0;
+    private Double consultationFee = 0.00;
     private String status;
     private String image;   // 👈 Doctor Image
     
@@ -67,21 +67,14 @@ public class Doctor {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return Name;
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.Name = firstName;
 	}
 
-	public String getLastName() {
-		return lastName;
-	}
 
-	public void setLastName(String lastName) {
-		System.out.println(lastName);
-		this.lastName = (lastName != "") ? lastName : "Kumar";
-		}
 
 	public String getSpecialization() {
 		return specialization;
@@ -145,6 +138,17 @@ public class Doctor {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	@Column(name = "is_online")
+	private Boolean isOnline = false;
+
+	public Boolean getIsOnline() {
+	    return isOnline;
+	}
+
+	public void setIsOnline(Boolean isOnline) {
+	    this.isOnline = isOnline;
 	}
 
     // getters & setters manually generate karo

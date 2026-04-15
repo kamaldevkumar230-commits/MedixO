@@ -54,6 +54,10 @@
 		    background-size: cover;
 		    background-position: center;
 		    position: relative;
+		
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
 		}
 
 		/* DARK OVERLAY */
@@ -65,9 +69,14 @@
 		        rgba(0,0,0,0.8),
 		        rgba(0,0,0,0.4)
 		    );
+		
 		}
 
-		/* CONTENT */
+		
+		
+		
+		
+		/* CONTENT 
 		.hero-content {
 		    position: relative;
 		    z-index: 2;
@@ -75,6 +84,20 @@
 		    text-align: left;
 		    top: 50%;
 		    transform: translateY(-50%);
+		}
+		
+		*/
+		.hero-content {
+		    position: relative;
+		    z-index: 2;
+			color: #fff;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+
+		    text-align: center;
+		    height: 100%;   /* 🔥 MOST IMPORTANT */
 		}
 
 		.hero-content h1 {
@@ -492,7 +515,7 @@
             <div class="carousel-item active hero-slide"
                  style="background-image: url('/images/slider2.jpg');">
                 <div class="overlay"></div>
-                <div class="container hero-content">
+                <div class=" hero-content">
                     <h1 class="fw-bold">World-Class Healthcare</h1>
                     <p>Comprehensive Care With Compassion & Advanced Technology</p>
                     <a href="login" class="btn btn-primary btn-lg">Book Appointment</a>
@@ -636,6 +659,19 @@
       th:text="${doc.specialization}">
 </span>
 
+
+
+<!-- 🟢🔴 LIVE STATUS -->
+<span th:if="${doc != null and doc.isOnline == true}" 
+      style="color:green; font-weight:bold;">
+    🟢 Online
+</span>
+
+<span th:if="${doc != null and (doc.isOnline == false or doc.isOnline == null)}" 
+      style="color:red; font-weight:bold;">
+    🔴 Offline
+</span>
+
 <h4 th:text="${doc.firstName }"></h4> <!--(+ ' ' + doc.lastName)-->
 
 <p th:text="${'Consultation Fee ₹' + doc.consultationFee}"></p>
@@ -733,7 +769,7 @@
     <div class="container">
         <h2 class="fw-bold">Ready To Book Your Visit?</h2>
         <p>Reach out to our support team or use our contact form below.</p>
-        <button class="btn btn-lg btn-light">Get In Touch</button>
+        <a href="about" class="btn btn-lg btn-light">Get In Touch</a>
     </div>
 </section>
 

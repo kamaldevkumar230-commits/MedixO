@@ -334,6 +334,11 @@ Manage appointments, patient records, video consultations and reports from this 
 
 </div>
 
+<script>
+window.addEventListener("beforeunload", function () {
+    navigator.sendBeacon('/doctor/logout');
+});
+</script>
 
 
 </body>
