@@ -164,10 +164,40 @@ placeholder="Enter patient diagnosis">
 <div class="row medicine-row">
 
 <div class="col-md-4">
-
+<!--
 <select class="form-control medicine-select"
 name="medicine[]"
-style="width:100%"></select>
+style="width:100%"></select>-->
+
+
+
+<select class="form-control medicine-select" name="medicine[]" style="width:100%">
+    
+    <option value="">-- Select Medicine --</option>
+
+    <option value="Paracetamol">Paracetamol</option>
+    <option value="Ibuprofen">Ibuprofen</option>
+    <option value="Aspirin">Aspirin</option>
+    <option value="Amoxicillin">Amoxicillin</option>
+    <option value="Azithromycin">Azithromycin</option>
+    <option value="Ciprofloxacin">Ciprofloxacin</option>
+    <option value="Metformin">Metformin</option>
+    <option value="Atorvastatin">Atorvastatin</option>
+    <option value="Omeprazole">Omeprazole</option>
+    <option value="Pantoprazole">Pantoprazole</option>
+    <option value="Cetirizine">Cetirizine</option>
+    <option value="Loratadine">Loratadine</option>
+    <option value="Montelukast">Montelukast</option>
+    <option value="Dolo 650">Dolo 650</option>
+    <option value="Crocin">Crocin</option>
+    <option value="Disprin">Disprin</option>
+    <option value="ORS">ORS</option>
+    <option value="Ranitidine">Ranitidine</option>
+    <option value="Vitamin D3">Vitamin D3</option>
+    <option value="Calcium Tablets">Calcium Tablets</option>
+
+</select>
+
 
 </div>
 
@@ -217,7 +247,7 @@ style="width:100%"></select>
 
 </div>
 
-
+<br><br>
 <button type="button" class="btn btn-primary mb-4" id="addMedicine">
 
 <i class="fa fa-plus"></i> Add Medicine
@@ -238,7 +268,7 @@ placeholder="Doctor advice for patient"></textarea>
 
 </div>
 
-
+<br><br>
 <button class="btn btn-success">
 
 <i class="fa fa-save"></i>

@@ -396,6 +396,19 @@ From here you can book appointments, view doctors and manage your medical record
       th:text="${doc.specialization}">
 </span>
 
+
+<!-- 🟢🔴 LIVE STATUS -->
+<span th:if="${doc != null and doc.isOnline == true}" 
+      style="color:green; font-weight:bold;">
+    🟢 Online
+</span>
+
+<span th:if="${doc != null and (doc.isOnline == false or doc.isOnline == null)}" 
+      style="color:red; font-weight:bold;">
+    🔴 Offline
+</span>
+
+
 <h5 th:text="${doc.firstName }"></h5>
 
 <p class="text-muted"

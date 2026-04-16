@@ -124,7 +124,7 @@ document.add(new Paragraph(report.getNotes()));
 
 document.add(new Paragraph(" "));
 document.add(new Paragraph(" "));
-document.add(new Paragraph("Doctor Signature : __________________"));
+document.add(new Paragraph("Doctor Signature : "+report.getDoctorName()));
 
 document.close();
 
