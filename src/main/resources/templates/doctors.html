@@ -116,14 +116,7 @@ padding:12px 0;
 				            <span class="badge bg-success"
 				                  th:text="${d.status}"></span>
 								  
-								  <span th:if="${doc != null and doc.isOnline}" style="color:green;">
-								      🟢 Online
-								  </span>
-
-								  <span th:if="${doc != null and !doc.isOnline}" style="color:red;">
-								      🔴 Offline
-								  </span>
-								  
+								
 				        </td>
 						<td>
 							<a th:href="@{/doctors/edit/{id}(id=${d.id})}" 

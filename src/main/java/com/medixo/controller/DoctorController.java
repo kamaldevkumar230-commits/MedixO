@@ -78,8 +78,7 @@ public class DoctorController {
     }
     
     
-    
-    // Open Edit Form
+   // Open Edit Form
     @GetMapping("/doctors/edit/{id}")
     public String editDoctor(@PathVariable Long id, Model model) {
 
