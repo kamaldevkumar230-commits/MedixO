@@ -154,8 +154,7 @@ public class RegisterController {
                     doc.setUser(savedUser);
                     doc.setEmail(savedUser.getEmail());
                     doc.setFirstName(savedUser.getName());
-                    doc.setStatus("PENDING");
-
+                   
                     doctorRepo.save(doc);
                 }
 

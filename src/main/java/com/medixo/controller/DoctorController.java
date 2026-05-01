@@ -149,11 +149,11 @@ public class DoctorController {
             doctor.setImage(imageUrl);
         }
 
-        doctor.setStatus("PENDING");
+       // doctor.setStatus("PENDING");
 
         doctorRepo.save(doctor);
 
-        return "redirect:/doctor_profile_form"; // better redirect
+        return "redirect:/doctor_profile"; // better redirect
     }
     
     

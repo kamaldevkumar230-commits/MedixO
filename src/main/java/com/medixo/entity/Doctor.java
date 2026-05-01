@@ -41,7 +41,7 @@ public class Doctor {
     private String phone;
     private Integer experienceYears = 0;
     private Double consultationFee = 0.00;
-    private String status;
+    //private String status;
     private String image;   // 👈 Doctor Image
     
    
@@ -116,13 +116,7 @@ public class Doctor {
 		this.consultationFee = consultationFee;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
 	
 	 public String getImage() {
 			return image;

@@ -185,68 +185,135 @@
 
 	
 	
+	<div class="profile-container">
 
-<div class="profile-container">
+	    <!-- HEADER -->
+	    <div class="profile-header">
+	        <img id="profileImg"
+	             th:src="${doctor.image != null} ? ${doctor.image} : '/images/default.png'">
 
-    <!-- HEADER -->
-    <div class="profile-header">
-       <img th:src="${doctor != null and doctor.image != null} ? ${doctor.image} : '/images/default.png'">
+	        <h2 th:text="${doctor.firstName}"></h2>
+	        <p th:text="${doctor.specialization}"></p>
 
-        <h2 th:text="${doctor.firstName}"></h2>
-        <p th:text="${doctor.specialization}"></p>
+	      
+	    </div>
 
-        <!-- Status -->
-        <span class="status"
-              th:classappend="${doctor.status == 'APPROVED'} ? 'approved' : 'pending'"
-              th:text="${doctor.status}">
-        </span>
-    </div>
+	    <!-- BODY -->
+	    <div class="profile-body">
 
-    <!-- BODY -->
-    <div class="profile-body">
+	        <form id="profileForm"
+	              action="/doctor/update-profile"
+	              method="post"
+	              enctype="multipart/form-data">
 
-        <div class="info-grid">
+	            <div class="info-grid">
 
-            <div class="info-box">
-                <label>Email</label>
-                <h4 th:text="${doctor.email}"></h4>
-            </div>
+	                <!-- EMAIL -->
+	                <div class="info-box">
+	                    <label>Email</label>
+	                    <input type="text" name="email"
+	                           th:value="${doctor.email}"
+	                           class="form-control editable" disabled>
+	                </div>
+					
+					
+					<div class="info-box">
+					    <label>Specialization</label>
+					    <select name="specialization"
+					            class="form-control editable" disabled>
 
-            <div class="info-box">
-                <label>Phone</label>
-                <h4 th:text="${doctor.phone}"></h4>
-            </div>
+					        <option th:selected="${doctor.specialization == 'Cardiology'}">Cardiology</option>
+					        <option th:selected="${doctor.specialization == 'Neurology'}">Neurology</option>
+					        <option th:selected="${doctor.specialization == 'Orthopedic'}">Orthopedic</option>
+					        <option th:selected="${doctor.specialization == 'Dermatology'}">Dermatology</option>
+					        <option th:selected="${doctor.specialization == 'Pediatrics'}">Pediatrics</option>
+					        <option th:selected="${doctor.specialization == 'General Physician'}">General Physician</option>
 
-            <div class="info-box">
-                <label>Experience</label>
-                <h4 th:text="${doctor.experienceYears + ' Years'}"></h4>
-            </div>
+					    </select>
+					</div>
+					
 
-            <div class="info-box">
-                <label>Consultation Fee</label>
-                <h4 th:text="'₹ ' + doctor.consultationFee"></h4>
-            </div>
+	                <!-- PHONE -->
+	                <div class="info-box">
+	                    <label>Phone</label>
+	                    <input type="text" name="phone"
+	                           th:value="${doctor.phone}"
+	                           class="form-control editable" disabled>
+	                </div>
 
-            <div class="info-box">
-                <label>Doctor Code</label>
-                <h4 th:text="${doctor.doctorCode}"></h4>
-            </div>
+	                <!-- EXPERIENCE -->
+	                <div class="info-box">
+	                    <label>Experience</label>
+	                    <input type="number" name="experienceYears"
+	                           th:value="${doctor.experienceYears}"
+	                           class="form-control editable" disabled>
+	                </div>
 
-            <div class="info-box">
-                <label>Joined On</label>
-                <h4 th:text="${#temporals.format(doctor.createdAt, 'dd MMM yyyy')}"></h4>
-            </div>
+	                <!-- FEE -->
+	                <div class="info-box">
+	                    <label>Consultation Fee</label>
+	                    <input type="number" name="consultationFee"
+	                           th:value="${doctor.consultationFee}"
+	                           class="form-control editable" disabled>
+	                </div>
 
-        </div>
+	                <!-- IMAGE -->
+	                <div class="info-box">
+	                    <label>Update Image</label>
+	                    <input type="file" name="imageFile"
+	                           class="form-control editable" disabled>
+	                </div>
 
-        <!-- EDIT BUTTON -->
-        <div class="edit-btn">
-            <a th:href="@{/doctor_profile_form}">Edit Profile</a>
-        </div>
+	            </div>
 
-    </div>
+	            <!-- BUTTONS -->
+	            <div class="text-center mt-4">
 
-</div>
+	                <!-- EDIT BUTTON -->
+	                <button type="button" class="btn btn-primary"
+	                        onclick="enableEdit()">Edit Profile</button>
 
+	                <!-- SAVE BUTTON -->
+	                <button type="submit" class="btn btn-success d-none"
+	                        id="saveBtn">Save</button>
+
+	                <!-- CANCEL -->
+	                <button type="button" class="btn btn-secondary d-none"
+	                        id="cancelBtn"
+	                        onclick="disableEdit()">Cancel</button>
+
+	            </div>
+
+	        </form>
+
+	    </div>
+	</div>
+	
+	
+	<script>
+
+	function enableEdit() {
+	    document.querySelectorAll(".editable").forEach(el => {
+	        el.disabled = false;
+	    });
+
+	    document.getElementById("saveBtn").classList.remove("d-none");
+	    document.getElementById("cancelBtn").classList.remove("d-none");
+	}
+
+	function disableEdit() {
+	    document.querySelectorAll(".editable").forEach(el => {
+	        el.disabled = true;
+	    });
+
+	    document.getElementById("saveBtn").classList.add("d-none");
+	    document.getElementById("cancelBtn").classList.add("d-none");
+	}
+
+	</script>
+	
+	
+	
+	
 </body>
 </html>

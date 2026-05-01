@@ -25,7 +25,7 @@ public class DoctorService {
 
     public Doctor saveDoctor(Doctor doctor) {
        // doctor.setDoctorCode("DOC-" + UUID.randomUUID().toString().substring(0,5));
-        doctor.setStatus("ACTIVE");
+       
         doctor.setCreatedAt(LocalDateTime.now());
         return doctorRepository.save(doctor);
     }
@@ -60,9 +60,7 @@ public class DoctorService {
             user.setApproved(true);
             userRepository.save(user);
 
-            // ✅ ADD THIS LINE
-            doc.setStatus("ACTIVE");
-            doctorRepository.save(doc);
+          
 
             try {
                 emailService.sendApprovalEmail(user.getEmail(), user.getName());

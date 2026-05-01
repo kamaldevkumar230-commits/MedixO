@@ -14,30 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RestController
-//@RequestMapping("/api/users") // better practice
 
 @Controller
 public class UserController {
 
-  /*  private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userService.saveUser(user);
-    }
-
-    @GetMapping("/all")
-    public List<User> getUsers() {
-        return userService.getAllUsers();
-    }
-    
-    
-    */
 	 @Autowired 
 	    private DoctorService doctorService;
     
@@ -54,6 +35,7 @@ public class UserController {
                           @RequestParam String password,
                           HttpSession session,
                           Model model) {
+    	try {
 
         User user = service.login(email, password);
 
@@ -62,13 +44,18 @@ public class UserController {
             return "login";
         }
 
-        session.setAttribute("user", user); // 🔥 FIX
+        session.setAttribute("user", user); 
 
         if("ADMIN".equals(user.getRole())){
             return "admin-dashboard";
         }
 
         if("DOCTOR".equals(user.getRole())){
+        	
+        	
+        	if (!user.isApproved()) {
+                return "redirect:/not-approved";
+            }
         	
         	  session.setAttribute("userEmail", user.getEmail()); 
         	doctorService.setDoctorOnline(email);
@@ -85,10 +72,25 @@ public class UserController {
             return "redirect:/patient-dashboard";
         }
         
+        
+
+        } catch (RuntimeException e) {
+
+            if (e.getMessage().equals("Wait for admin approval")) {
+                return "redirect:/not-approved";
+            }
+        }
+        
+        
 
         return "login";
         
     }
     
+    
+    @GetMapping("/not-approved")
+    public String notApprovedPage() {
+        return "doctor_notApproved_er_page";
+    }
     
 }
